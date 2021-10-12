@@ -18,6 +18,7 @@ import setAuthToken from "./utils/setAuthToken";
 import DashBoard from "./components/dashboard";
 import Transaction from "./components/transaction";
 import Tokens from "./components/tokens";
+import TokenSale from "./components/tokenSale";
 import Setting from "./components/setting";
 import TokenEdit from "./components/tokens/edit";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
@@ -71,6 +72,9 @@ function App  ()  {
                   <Tokens />
                 </PrivateRoute>
                 <PrivateRoute path="/tokenedit/:id" component={TokenEdit} />
+                <PrivateRoute path="/tokensale">
+                  <TokenSale />
+                </PrivateRoute>
                 <PrivateRoute path="/setting">
                   <Setting />
                 </PrivateRoute>

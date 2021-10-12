@@ -56,6 +56,20 @@ class SideBody extends Component {
                         </NavLink>
                     </li>
                     <li className="nav-item ">
+                        {/* <NavLink className="navbar-brand" to="/token"> */}
+                        <NavLink className="nav-link" to="/tokensale">
+                            <i className="icon">
+                            <svg width="22" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16.8397 20.1642V6.54639" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                                <path d="M20.9173 16.0681L16.8395 20.1648L12.7617 16.0681" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                                <path d="M6.91102 3.83276V17.4505" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>
+                                <path d="M2.8335 7.92894L6.91127 3.83228L10.9891 7.92894" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path>  
+                            </svg>                                                                                   
+                            </i>
+                            <span className="item-name">Token Sale</span>
+                        </NavLink>
+                    </li>
+                    <li className="nav-item ">
                         {/* <NavLink className="navbar-brand" to="/set"> */}
                         <NavLink className="nav-link" to="/setting">
                             <i className="icon">
