@@ -1,0 +1,30 @@
+
+$headerHeight: 60px;
+$blue: #1652f1;
+$textColor: #5c5c5c;
+$bg-gray1: #ededed;
+$sm: 576px;
+.container {
+  header {
+    height: $headerHeight;
+    margin-bottom: 60px;
+    display: flex;
+    justify-content: center;
+    a {
+      font-size: 36px;
+      color: $bg-gray1;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      img {
+        width: 30px;
+        margin-right: 16px;
+      }
+    }
+  }
+  .trading-chart {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
