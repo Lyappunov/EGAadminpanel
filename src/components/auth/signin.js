@@ -17,7 +17,7 @@ class Signin extends Component {
     componentDidMount() {
         if (this.props.auth.isAuthenticated) {
             // this.props.history.push("/list");
-            window.location.href = '/list'
+            window.location.href = '/dashboard'
         }
     };
 
@@ -25,7 +25,7 @@ class Signin extends Component {
         // debugger;
         if (nextProps.auth.isAuthenticated) {
             // this.props.history.push("/list");
-            window.location.href = '/list'
+            window.location.href = '/dashboard'
         }else window.location.href = '/'
 
         if (nextProps.errors) {

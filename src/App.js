@@ -54,14 +54,14 @@ function App  ()  {
             </Route>
             <Switch>
                 
-                <PrivateRoute exact path="/list">
+                <PrivateRoute path="/list">
                   <RecordList />
                 </PrivateRoute>
                 <PrivateRoute path="/edit/:id" component={Edit} />
                 <PrivateRoute path="/create">
                   <Create />
                 </PrivateRoute>
-                <PrivateRoute path="/dashboard">
+                <PrivateRoute exact path="/dashboard">
                   <DashBoard />
                 </PrivateRoute>
                 <PrivateRoute path="/transaction">
