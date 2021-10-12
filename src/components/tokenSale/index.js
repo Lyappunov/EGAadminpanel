@@ -22,11 +22,8 @@ class TokenSale extends Component {
       errors: {}
     };
     this.getData = this.getData.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  onChange = e => {
-    this.setState({ [e.target.id]: e.target.value });
-  };
   
   onChangeEGA = e => {
     this.setState({ egaAmount: e.target.value });
@@ -45,6 +42,9 @@ class TokenSale extends Component {
   handleSubmit(e){
     e.preventDefault();
    
+    if(Number(this.state.egaAmount) > Number(this.state.limitega)){
+      alert(`You can sell the your token for maximum ${this.state.salelimit} USD (${this.state.limitega} EGA)`)
+    }
   }
   // This method will get the data from the database.
   componentDidMount() {
