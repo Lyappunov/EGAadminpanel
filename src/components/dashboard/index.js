@@ -7,12 +7,12 @@ import { Link } from "react-router-dom";
 import SideBar from "../sidebar";
 import HeaderBar from "../headerbar";
 import {SERVER_MAIN_URL} from '../../config';
-import PriceLongcard from './priceLongcard'
-import PairePriceCardRow from './pairPriceCardRow'
-import BalanceCard from './balanceCard'
-import CandleChart from './candleChart'
-import HolderCard from './holderCard'
-import EarningCard from './earningCard'
+// import PriceLongcard from './priceLongcard'
+import PairePriceCardRow from './pairPriceCardRow';
+import BalanceCard from './balanceCard';
+import CandleChart from './candleChart';
+import HolderCard from './holderCard';
+import EarningCard from './earningCard';
 
 
 
@@ -44,7 +44,7 @@ class Dashboard extends Component {
           <SideBar />
           <HeaderBar />
           <div className="container-fluid content-inner pb-0" style={{paddingLeft:'14%'}}>
-              <PriceLongcard/>
+              {/* <PriceLongcard/> */}
               <PairePriceCardRow />
               <CandleChart />
               <BalanceCard />
