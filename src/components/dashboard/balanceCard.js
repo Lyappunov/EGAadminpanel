@@ -61,7 +61,6 @@ class BalanceCard extends Component {
                         distribute : distribute.toFixed(5),
                         totalSupply : bigHumanValueTotal.toFixed(5)
                     });
-                    console.log('LLLLLLLLLLLLLLLLLLLLLLLL', distribute)
                 })
             
             
