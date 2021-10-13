@@ -3,6 +3,11 @@ import React, { Component } from "react";
 import axios from 'axios';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+
+import { ethers } from 'ethers';
+import Web3Modal from 'web3modal';
+import Web3 from "web3";
+
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import SideBar from "../sidebar"
 import HeaderBar from "../headerbar"
@@ -24,6 +29,32 @@ class TokenSale extends Component {
     this.getData = this.getData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+  async connect(web3Modal) {
+    provider = await web3Modal.connect();
+    return new Web3(provider);
+  }
+
+  async checkConnection () {
+
+    // Check if browser is running Metamask
+    let web3;
+    if (window.ethereum) {
+        web3 = new Web3(window.ethereum);
+    } else if (window.web3) {
+        web3 = new Web3(window.web3.currentProvider);
+    };
+
+    // Check if User is already connected by retrieving the accounts
+    web3.eth.getAccounts()
+        .then(async (addr) => {
+            // Set User account into state
+            if(addr.length !== 0) {
+              setConnectionFlg(true);
+              setCurrentAccount(addr);
+            }
+        });
+  };
   
   onChangeEGA = e => {
     this.setState({ egaAmount: e.target.value });
