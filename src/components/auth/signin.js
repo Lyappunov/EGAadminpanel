@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import "../../common.css";
 import { connect } from "react-redux";
 import { loginUser } from "../../actions/authActions";
+import Logo from "../../images/logo192.png";
 
 class Signin extends Component {
     constructor() {
@@ -60,7 +61,7 @@ class Signin extends Component {
                             <div className="card">
                                 <div className="card-body">
                                     <div className="row justify-content-center h-100 align-items-center">
-                                        <img src='../../images/EgaCion.png' style={{width:"40%"}}/>
+                                        <img src={Logo} style={{width:"40%"}}/>
                                     </div>
                                     <div className="auth-form">
                             

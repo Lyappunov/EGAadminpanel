@@ -4,6 +4,7 @@ import "../../common.css";
 
 import { connect } from "react-redux";
 import { registerUser } from "../../actions/authActions";
+import Logo from "../../images/logo192.png";
 
 class Signup extends Component {
     constructor() {
@@ -59,7 +60,7 @@ class Signup extends Component {
                             <div className="card">
                                 <div className="card-body">
                                     <div className="row justify-content-center h-100 align-items-center">
-                                        <img src='../../images/EgaCion.png' style={{width:"40%"}}/>
+                                        <img src={Logo} style={{width:"40%"}}/>
                                     </div>
                                     <div className="auth-form">
                             

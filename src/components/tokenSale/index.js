@@ -4,8 +4,6 @@ import axios from 'axios';
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
 
-import { ethers } from 'ethers';
-import Web3Modal from 'web3modal';
 import Web3 from "web3";
 
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -133,27 +131,27 @@ class TokenSale extends Component {
                             </div>
                             <div className="d-flex mt-4 ms-4 me-4 justify-content-between" style={{paddingBottom : 20}}>
                             
-                            <form onSubmit={this.handleSubmit} style={{width:'100%'}}>
-                                    <div className="modal-content">
-                                        
-                                        <div className="modal-body">
-                                        
-                                            <div className="form-floating mb-4">
-                                                <input type="number" className="form-control" id="egaAmount" placeholder="0" onChange={this.onChangeEGA} value={this.state.egaAmount}/>
-                                                <label>EGA Coin</label>
-                                            </div>
-                                            <div className="form-floating mb-4">
-                                                <input type="number" className="form-control" id="bnbAmount" placeholder="0" onChange={this.onChangeBNB} value={this.state.bnbAmount}/>
-                                                <label>BNB</label>
-                                            </div>
-                                            <p style={{color:'grey'}}>* You can sell the your token for maximum {this.state.salelimit} USD ({this.state.limitega} EGA)</p>
-                                        </div>
-                                        <div className="modal-footer">
-                                            {/* <button type="button" className="btn btn-secondary" onClick={this.editClose}>Close</button> */}
-                                            <button type="submit" className="btn btn-primary">Sale</button>
-                                        </div>
-                                    </div>
-                                </form>
+                              <form onSubmit={this.handleSubmit} style={{width:'100%'}}>
+                                <div className="modal-content">
+                                      
+                                      <div className="modal-body">
+                                      
+                                          <div className="form-floating mb-4">
+                                              <input type="number" className="form-control" id="egaAmount" placeholder="0" onChange={this.onChangeEGA} value={this.state.egaAmount}/>
+                                              <label>EGA Coin</label>
+                                          </div>
+                                          <div className="form-floating mb-4">
+                                              <input type="number" className="form-control" id="bnbAmount" placeholder="0" onChange={this.onChangeBNB} value={this.state.bnbAmount}/>
+                                              <label>BNB</label>
+                                          </div>
+                                          <p style={{color:'grey'}}>* You can sell the your token for maximum {this.state.salelimit} USD ({this.state.limitega} EGA)</p>
+                                      </div>
+                                      <div className="modal-footer">
+                                          {/* <button type="button" className="btn btn-secondary" onClick={this.editClose}>Close</button> */}
+                                          <button type="submit" className="btn btn-primary">Sale</button>
+                                      </div>
+                                </div>
+                              </form>
                             </div>
                         </div>
                     </div>
