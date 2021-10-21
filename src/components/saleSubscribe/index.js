@@ -21,7 +21,8 @@ const Record = (props) => {
     <td>{address}</td>
     <td>{props.record.tokenName}</td>
     <td>{props.record.amount}</td>
-    <td>{props.record.usdPrice} USD ( {props.record.eurPrice} EUR)</td>
+    <td>{Number(props.record.usdPrice).toFixed(2)} USD ( {Number(props.record.eurPrice).toFixed(2)} EUR)</td>
+    <td>{props.record.paymentKind}</td>
     <td>
       <a
         href="#"
@@ -160,10 +161,11 @@ class SaleSubscribe extends Component {
                                         <tr>
                                         <th>Date</th>
                                         <th>Subscriber</th>
-                                        <th>Wallet Address</th>
-                                        <th>Token Name</th>
+                                        <th>Wallet</th>
+                                        <th>Token</th>
                                         <th>Amount</th>
                                         <th>Price</th>
+                                        <th>PayMethod</th>
                                         <th>Action</th>
                                         
                                         </tr>
