@@ -10,10 +10,92 @@ import HeaderBar from "../headerbar"
 import {SERVER_MAIN_URL} from '../../config'
 import '../../common.css'
 
+import { Modal } from 'react-responsive-modal';
+import 'react-responsive-modal/styles.css';
+
 const Record = (props) => {
     let walletaddress = props.record.walletAddress;
     
     let address = walletaddress.slice(0,6) +'...'+ walletaddress.slice(-4);
+
+    const CLIENT = {
+      sandbox:
+        "ARStqa-xTPho6-SAziKCa__unt5sBMDyZocBGBiAOqaTl0Cd6L8838Ud7rf6emO5W0dVsa6HD77gPvxN",
+      production:
+        "ARBEG9wQuQF0ZsKC9OLBokioEkokiNNv7mjAmv4uqYnI9Bo_5adWcVBdC9m-o0mENSYsuk-45OnPQWTH"
+    };
+   
+    // const CLIENT_ID = CLIENT.production;
+    const CLIENT_ID = CLIENT.sandbox;
+   const PAYPAL_API_URL = 'https://api-m.sandbox.paypal.com/v1/payments/payouts';
+
+
+   const sendMoney = (subscribe) => {
+     let request_header = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${CLIENT_ID}`
+     }
+     let request_body = {
+      "sender_batch_header": {
+        "sender_batch_id": `${subscribe._id}`,
+        "recipient_type": "EMAIL",
+        "email_subject": "The payout for token sale!",
+        "email_message": "You received a payment. Thanks for using our service!"
+      },
+      "items": [
+        {
+          "amount": {
+            "value": `${Number(subscribe.usdPrice).toFixed(2)}`,
+            "currency": "USD"
+          },
+          "sender_item_id": `${subscribe._id}`,
+          "recipient_wallet": "PAYPAL",
+          "receiver": `${subscribe.address}`
+        }
+      ]
+     }
+     axios
+     .post(PAYPAL_API_URL, request_body, {'headers' : request_header})
+     .then((res) => {
+        treatDatabase(subscribe);
+     })
+     .catch((err) => {
+        console.log(err);
+     })
+   }
+
+   const treatDatabase = (subscribe) => {
+      const newSubscribe = {
+        paymentState : 'paid'
+      };
+      axios
+      .post(`${SERVER_MAIN_URL}/subscribeupdate/${subscribe._id}`, newSubscribe)
+      .then((response) => {
+        const transactionData = {
+          personName:subscribe.subscriber,
+          address:subscribe.address,
+          walletAddress: subscribe.walletAddress,
+          tranDate:subscribe.subscribeDate,
+          tokenName:subscribe.tokenName,
+          tranType:'SELL',
+          amount : subscribe.amount,
+          price : subscribe.usdPrice + ' USD'
+        }
+        axios
+        .post(`${SERVER_MAIN_URL}/record/tranadd`, transactionData)
+        .then((res) => {
+            alert('Your payout successfull !');
+            window.location.href = '/subscribe';
+        })
+        .catch((err) => {
+            console.log(err);
+            alert('Something went wrong with your payout.');
+        })
+      })
+      .catch((error) => {
+        alert(error)
+      })
+   }
     return (
   <tr >
     <td>{props.record.subscribeDate}</td>
@@ -21,7 +103,7 @@ const Record = (props) => {
     <td>{address}</td>
     <td>{props.record.tokenName}</td>
     <td>{props.record.amount}</td>
-    <td>{Number(props.record.usdPrice).toFixed(2)} USD ( {Number(props.record.eurPrice).toFixed(2)} EUR)</td>
+    <td>{Number(props.record.usdPrice).toFixed(2)} USD ( {props.record.paymentKind=='paypal'?Number(props.record.eurPrice).toFixed(2)+"EUR" : props.record.btcPrice + "BTC"})</td>
     <td>{props.record.paymentKind}</td>
     <td>
       <a
@@ -34,8 +116,10 @@ const Record = (props) => {
                 {
                   label: 'Yes',
                   onClick: () => {
-                    // props.deleteToken(props.record._id);
-                    window.location.href = '/subscribe'
+                    if(props.record.paymentKind == 'paypal')
+                    sendMoney(props.record);
+                    else if(props.record.paymentKind == 'btc')
+                    props.openModal( props.record );
                   }
                 },
                 {
@@ -60,7 +144,7 @@ const Record = (props) => {
                   label: 'Yes',
                   onClick: () => {
                     // props.deleteToken(props.record._id);
-                    window.location.href = '/subscribe'
+
                   }
                 },
                 {
@@ -84,9 +168,24 @@ class SaleSubscribe extends Component {
     super(props);
     this.state = { 
       records: [],
-      subscribeData:[]
+      subscribeData:[],
+      openModal : false,
+      senderAddress : '',
+      senderPrivateKey : '',
+      recipientAddress:'',
+      btcAmount:0,
+      subscriber:'',
+      walletAddress:'',
+      tokenName:'',
+      subscribeDate:'',
+      subscribeId:'',
+      tokenAmount:0
     };
     this.getSubscribeData = this.getSubscribeData.bind(this);
+    this.onOpenModal = this.onOpenModal.bind(this);
+    this.onCloseModal = this.onCloseModal.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.saveSubscribeDatabase = this.saveSubscribeDatabase.bind(this);
   }
 
 
@@ -126,6 +225,78 @@ class SaleSubscribe extends Component {
     });
   }
 
+  onChange = e => {
+    e.preventDefault();
+    this.setState({ [e.target.id]: e.target.value });
+  };
+
+  onOpenModal(record){
+    this.setState({
+      openModal : true,
+      btcAmount : record.btcPrice,
+      recipientAddress : record.address,
+      subscriber:record.subscriber,
+      walletAddress:record.walletAddress,
+      subscribeDate : record.subscribeDate,
+      tokenName : record.tokenName,
+      subscribeId: record._id,
+      tokenAmount:record.amount
+    });
+  }
+
+  onCloseModal() {
+    this.setState({...this.state, openModal : false});
+  }
+
+  handleSubmit(e){
+    e.preventDefault();
+   
+    let sendBTCData = {
+      recipientAddress: this.state.recipientAddress,
+      senderAddress:this.state.senderAddress,
+      senderPrivateKey: this.state.senderPrivateKey,
+      amountToSend: this.state.btcAmount
+      };
+    axios
+    .post(`${SERVER_MAIN_URL}/record/sendbitcoin`, sendBTCData)
+    .then ((res) => {
+      this.saveSubscribeDatabase()
+    })
+  }
+
+  saveSubscribeDatabase () {
+    const newSubscribe = {
+      paymentState : 'paid'
+    };
+    axios
+    .post(`${SERVER_MAIN_URL}/subscribeupdate/${this.state.subscribeId}`, newSubscribe)
+    .then((response) => {
+      const transactionData = {
+        personName:this.state.subscriber,
+        address:this.state.recipientAddress,
+        walletAddress: this.state.walletAddress,
+        tranDate:this.state.subscribeDate,
+        tokenName:this.state.tokenName,
+        tranType:'SELL',
+        amount : this.state.tokenAmount,
+        price : this.state.btcAmount + ' BTC'
+      }
+      axios
+      .post(`${SERVER_MAIN_URL}/record/tranadd`, transactionData)
+      .then((res) => {
+          alert('Your payout successfull !');
+          window.location.href = '/subscribe';
+      })
+      .catch((err) => {
+          console.log(err);
+          alert('Something went wrong with your payout.');
+      })
+    })
+    .catch((error) => {
+      alert(error)
+    })
+ }
+
   // This method will map out the users on the table
   recordList() {
     if(this.state.subscribeData){
@@ -134,7 +305,9 @@ class SaleSubscribe extends Component {
               <Record
                 record={currentrecord}
                 deleteRecord={this.deleteRecord}
+                openModal = {this.onOpenModal}
                 key={currentrecord._id}
+                
               />
             );
           });
@@ -177,7 +350,41 @@ class SaleSubscribe extends Component {
                     </div>
                 </div>
           </div>
-
+          <Modal open={this.state.openModal} onClose={this.onCloseModal}>
+            <div tabIndex="-1" aria-labelledby="exampleModalCenteredScrollableTitle" aria-hidden="false">
+              <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <form onSubmit={this.handleSubmit} style={{width:'100%'}}>
+                  <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title">Add New Token</h5>
+                        <button type="button" className="btn-close btn-close-white" aria-label="Close" onClick={this.onCloseModal}></button>
+                    </div>
+                    <div className="modal-body">
+                        <div className="row">
+                            <div className='col-lg-12'>
+                                <p style={{color:'green'}}>Please input your credential for your BTC wallet</p>
+                            </div>
+                        </div>
+                      
+                        <div className="form-floating mb-4">
+                            <input type="text" className="form-control" id="senderAddress" placeholder="Wallet Address" onChange={this.onChange}/>
+                            <label>Wallet Address</label>
+                        </div>
+                        <div className="form-floating mb-4">
+                            <input type="text" className="form-control" id="senderPrivateKey" placeholder="Private Key" onChange={this.onChange}/>
+                            <label>Private Key</label>
+                        </div>
+                    </div>
+                    <div className="modal-footer">
+                        <button type="button" className="btn btn-secondary" onClick={this.onCloseModal}>Close</button>
+                        <button type="submit" className="btn btn-primary">Pay( {this.state.btcAmount} BTC )</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            
+          </Modal>
           
 
       </div>
