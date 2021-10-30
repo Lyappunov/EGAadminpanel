@@ -14,6 +14,8 @@ class Edit extends Component {
     this.state = {
         name: "",
         phonenumber: "",
+        selectedFileName:'',
+        photos:[],
         errors: {}
     };
     this.onSubmit = this.onSubmit.bind(this);
@@ -25,7 +27,8 @@ class Edit extends Component {
       .then((response) => {
         this.setState({
           name: response.data.name,
-          phonenumber: response.data.phonenumber
+          phonenumber: response.data.phonenumber,
+          photos : response.data.photoName?[{filename : response.data.photoName}]:[]
         });
       })
       .catch(function (error) {
@@ -42,25 +45,27 @@ class Edit extends Component {
     };
 
     onChangeFile = e => {
-      console.log('your selected file is ', e.target)
-      this.setState({ selectedFile: e.target.files[0]})
       
+      this.setState({selectedFileName : e.target.files[0].name})
+      const data = new FormData();
+      data.append('file', e.target.files[0]);
+
+      axios.post(`${SERVER_MAIN_URL}/uploadphoto`, data)
+      .then((res) => {
+        // this.setState({ photos: [res.data, ...this.state.photos] });
+        console.log(res.data)
+        this.setState({ photos: [res.data] });
+      });
     };
  
   // This function will handle the submission.
   onSubmit(e) {
     e.preventDefault();
-    let fileName = this.state.name + '_' + this.state.selectedFile.name
-    const formData = new FormData();
-    formData.append(
-      "myPhoto",
-      this.state.selectedFile,
-      fileName
-    );
+    
     const newEditedperson = {
       name: this.state.name,
       phonenumber: this.state.phonenumber,
-      avatar:formData
+      photoName : this.state.photos[0].filename
     };
     console.log(newEditedperson);
  
@@ -89,7 +94,7 @@ class Edit extends Component {
                               <h4 className="card-title text-white">Update {this.state.name}</h4>
                           </div>
                           <div className="d-flex mt-3 ms-4 me-4 justify-content-between">
-                              <form onSubmit={this.handleSubmit} style={{width:'100%'}}>
+                              <form onSubmit={this.onSubmit} style={{width:'100%'}}>
                                   <div className="modal-content">
                                       <div className="modal-body">
                                           <div className="form-floating mb-4">
@@ -101,8 +106,12 @@ class Edit extends Component {
                                               <label>Phone Number</label>
                                           </div>
                                           <div className="form-floating mb-4">
-                                              <input type="file" className="form-control" id="avatar" placeholder="Photo" onChange={this.onChangeFile} value=''/>
-                                              
+                                              <input type="file" className="form-control" id="avatar" placeholder="Photo" onChange={this.onChangeFile}/>
+                                              {this.state.photos.map((photo, index) => (
+                                                <div style={{margin:'auto'}} key={'div-'+index}>
+                                                  <img src={`${SERVER_MAIN_URL}/${photo.filename}`} style={{width:'40%', borderRadius:10}} key={index}/>
+                                                </div>
+                                              ))}
                                           </div>
                                       </div>
                                       <div className="modal-footer">
