@@ -115,8 +115,8 @@ class Edit extends Component {
                                           </div>
                                       </div>
                                       <div className="modal-footer">
-                                          <button type="button" className="btn btn-secondary" onClick={this.editClose}>Close</button>
-                                          <button type="submit" className="btn btn-primary">Save</button>
+                                        <button type="button" className="btn btn-secondary" onClick={this.editClose}>Close</button>
+                                        <button type="submit" className="btn btn-primary">Save</button>
                                       </div>
                                   </div>
                               </form>

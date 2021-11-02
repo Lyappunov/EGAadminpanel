@@ -20,6 +20,8 @@ import Transaction from "./components/transaction";
 import Tokens from "./components/tokens";
 import TokenSale from "./components/tokenSale";
 import SaleSubscribe from "./components/saleSubscribe";
+import SendingEGA from "./components/sendingEGA/sendingEGA";
+import Send from "./components/sendingEGA/send";
 import Setting from "./components/setting";
 import TokenEdit from "./components/tokens/edit";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
@@ -79,6 +81,10 @@ function App  ()  {
                 <PrivateRoute path="/subscribe">
                   <SaleSubscribe />
                 </PrivateRoute>
+                <PrivateRoute path="/sendingtoken">
+                  <SendingEGA />
+                </PrivateRoute>
+                <PrivateRoute path="/send/:id" component={Send} />
                 <PrivateRoute path="/setting">
                   <Setting />
                 </PrivateRoute>
