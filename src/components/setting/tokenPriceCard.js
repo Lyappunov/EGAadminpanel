@@ -45,7 +45,7 @@ class TokenPriceCard extends Component {
     axios
       .get(`${SERVER_MAIN_URL}/egaprice`)
       .then((res)=>{
-          this.setState({calculatedPrice: res.data, displayPrice : Number(res.data) + Number(this.state.ega)})
+          this.setState({calculatedPrice: res.data.egaPrice, displayPrice : Number(res.data.egaPrice) + Number(this.state.ega)})
       })
   }
 

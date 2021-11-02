@@ -86,7 +86,7 @@ class Send extends Component {
         newSendigInfo
       )
       .then((res) => {
-        console.log(res.data);
+        alert(`${this.state.tokenName.toUpperCase()} token have been sent successfully.`)
         window.location.href='/sendingtoken'
       });
  
