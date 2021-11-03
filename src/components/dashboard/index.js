@@ -12,6 +12,7 @@ import PairePriceCardRow from './pairPriceCardRow';
 import BalanceCard from './balanceCard';
 import CandleChart from './candleChart';
 import HolderCard from './holderCard';
+import HolderCardEfranc from './holderCardEfranc';
 import EarningCard from './earningCard';
 
 
@@ -21,7 +22,10 @@ class Dashboard extends Component {
   constructor(props) {
     super(props);
     
-    this.state = { records: [] };
+    this.state = { 
+        users: [],
+        usersFlag : false
+    };
     this.state = {
         currentRecord: {
             name: '',
@@ -32,9 +36,20 @@ class Dashboard extends Component {
 
   }
 
-  
+  getUsers(){
+    axios
+      .get(`${SERVER_MAIN_URL}/record/`)
+      .then((response) => {
+        this.setState({ users: response.data, usersFlag : true});
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
-  // This method will delete a record based on the method
+ componentDidMount(){
+     this.getUsers();
+ }
   
 
   // This following section will display the table with the records of individuals.
@@ -50,10 +65,15 @@ class Dashboard extends Component {
               <BalanceCard />
               <div className='row'>
                   <div className='col-lg-6'>
-                      <HolderCard />
+                      {this.state.usersFlag == true && (
+                        <HolderCard users={this.state.users}/>
+                      )}
+                      
                   </div>
                   <div className='col-lg-6'>
-                      <EarningCard />
+                    {this.state.usersFlag ==  true && (
+                        <HolderCardEfranc users={this.state.users}/>
+                      )}
                   </div>
               </div>
           </div>

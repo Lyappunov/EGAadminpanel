@@ -12,26 +12,20 @@ import Avatar6 from "../../images/avatars/06.png";
 
 
 
-class HolderCard extends Component {
+class HolderCardEfranc extends Component {
   // This is the constructor that shall store our data retrieved from the database
   constructor(props) {
     super(props);
-   
+    
     this.state= {
         gahHolder : [],
         efrancHolder : [],
+        
         gahHolderFlag : false,
+        recordsFlag : false,
         sumAmount : 0, 
-        cardLogo : props.cardLogo,
-        pairName : props.pairName,
-        pairPrice : props.pairPrice
     }
-    if(props.title) this.state={
-        title : props.title,
-        cardLogo : props.cardLogo,
-        pairName : props.pairName,
-        pairPrice : props.pairPrice
-    }
+    let number = 0;
   }
   getUsers(){
     axios
@@ -58,13 +52,26 @@ class HolderCard extends Component {
     }); 
   }
 
-  gahHolderList() {
-    if(this.state.gahHolder){
-        let gahHolderArr = this.state.gahHolder;
-        gahHolderArr.sort((a,b) => {
+  getEfrancHolders () {
+    axios
+    .get(`${SERVER_MAIN_URL}/holder/efranc`)
+    .then((response) => {
+      this.setState({
+        efrancHolder : response.data
+      });
+    })
+    .catch(function (error) {
+      console.log(error);
+    }); 
+  }
+
+  efrancHolderList() {
+    if(this.state.efrancHolder){
+        let efrancHolderArr = this.state.efrancHolder;
+        efrancHolderArr.sort((a,b) => {
             return b.amount - a.amount;
         })
-        return gahHolderArr.map((item, idx) => {
+        return efrancHolderArr.map((item, idx) => {
             if(idx < 5) {
                 let index = this.props.users.findIndex(raw => raw.name == item.name);
                 return (
@@ -82,7 +89,8 @@ class HolderCard extends Component {
   }
 
   componentDidMount () {
-    this.getGahHolders();
+    // this.getUsers();
+    this.getEfrancHolders();
   }
 
   // This method will delete a record based on the method
@@ -96,13 +104,13 @@ class HolderCard extends Component {
                 <div className="card">
                     <div className="card-header d-flex justify-content-between flex-wrap">
                         <div className="header-title">
-                            <h4 className="card-title">Top GAH token Holders</h4>          
+                            <h4 className="card-title">Top E-FRANC token Holders</h4>          
                         </div>
                     </div>
                     <div className="card-body">
                         <div className= "d-grid grid-cols-1 gap-card" style = {{paddingBottom: 30}}>
                             {
-                               this.gahHolderList() 
+                               this.efrancHolderList() 
                             }
                         </div>
                     </div>
@@ -113,7 +121,7 @@ class HolderCard extends Component {
   }
 }
 
-HolderCard.propTypes = {
+HolderCardEfranc.propTypes = {
     auth: PropTypes.object.isRequired,
 };
 
@@ -124,4 +132,4 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps
-)(HolderCard);
+)(HolderCardEfranc);

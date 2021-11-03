@@ -36,7 +36,6 @@ import React, {
   
     componentDidMount() {
       this.tradingViewWidget = new widget(this.widgetOptions)
-      console.log('}}}}}}}}}}}}}}}}', this.tradingViewWidget)
       this.chartReady()
     }
   

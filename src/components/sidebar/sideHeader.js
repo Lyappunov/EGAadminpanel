@@ -15,8 +15,8 @@ class SideHeader extends Component {
     <div>
         <div className="sidebar-header d-flex align-items-center justify-content-start">
             <NavLink className="navbar-brand" to="/">
-                <img src='../../images/EgaCion.png' style={{width:"50%"}}/>
-                <h4 className="logo-title m-0" style={{paddingTop:24}}>EGA</h4>
+                <img src='../../images/logo192.png' style={{width:"50%"}}/>
+                <h4 className="logo-title m-0" style={{paddingTop:24}}>GAH</h4>
             </NavLink>
             <div className="sidebar-toggle" data-toggle="sidebar" data-active="true">
                 <i className="icon">

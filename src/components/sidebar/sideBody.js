@@ -55,8 +55,7 @@ class SideBody extends Component {
                             <span className="item-name">Our Tokens</span>
                         </NavLink>
                     </li>
-                    <li className="nav-item ">
-                        {/* <NavLink className="navbar-brand" to="/token"> */}
+                    {/* <li className="nav-item ">
                         <NavLink className="nav-link" to="/tokensale">
                             <i className="icon">
                             <svg width="22" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -68,7 +67,7 @@ class SideBody extends Component {
                             </i>
                             <span className="item-name">Token Sale</span>
                         </NavLink>
-                    </li>
+                    </li> */}
                     <li className="nav-item ">
                         <NavLink className="nav-link" to="/subscribe">
                             <i className="icon">

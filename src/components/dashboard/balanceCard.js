@@ -36,30 +36,19 @@ class BalanceCard extends Component {
     axios
       .get(`${SERVER_MAIN_URL}/egabalance`)
       .then((response) => {
-            const decimal = 16;
-            const bigValue = new BigNumber(response.data.egaBalance);
-            const bigTokenDecimal = this.generateBigUnit(decimal);
-            const bigHumanValue = bigValue.dividedBy(
-                new BigNumber(1).dividedBy(bigTokenDecimal)
-            );
-            let balance = bigHumanValue;
-            let distribute = '';
-                console.log('KKKKKKKKKKKKKKKKK', balance )
+          let balance = Number(response.data);
             axios
                 .get(`${SERVER_MAIN_URL}/totalsupply`)
                 .then((total)=>{
 
-                    const bigValueTotal = new BigNumber(total.data.totalsupply);
-                    const bigTokenDecimalTotal = this.generateBigUnit(decimal);
-                    const bigHumanValueTotal = bigValueTotal.dividedBy(
-                        new BigNumber(1).dividedBy(bigTokenDecimalTotal)
-                    );
-                    distribute = Number(bigHumanValueTotal) - Number(balance)
+                    let totalSupply = Number(total.data.gah);
+                    
+                    let distribute = totalSupply - balance ;
 
                     this.setState({
                         balance : balance.toFixed(5),
                         distribute : distribute.toFixed(5),
-                        totalSupply : bigHumanValueTotal.toFixed(5)
+                        totalSupply : totalSupply.toFixed(5)
                     });
                 })
             
@@ -72,7 +61,6 @@ class BalanceCard extends Component {
 
   // This following section will display the table with the records of individuals.
   render() {
-      console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>', this.state.totalSupply)
     return (
       <div style={{marginTop:30}}>
           <div className="row">
@@ -80,22 +68,22 @@ class BalanceCard extends Component {
                     <div className="row">
                         <div className="col-md-4">
                             <PairPriceCard
-                                title = 'EGA' 
+                                title = 'GAH' 
                                 pairName = {'Total Supply'}
                                 pairPrice = {this.state.totalSupply}
                             />
                         </div>
                         <div className="col-md-4">
                             <PairPriceCard
-                                title = 'EGA' 
+                                title = 'GAH' 
                                 pairName = {'Distributed token'}
                                 pairPrice = {this.state.distribute}
                             />
                         </div>
                         <div className="col-md-4">
                             <PairPriceCard 
-                                title = 'EGA'
-                                pairName = 'Wallet Balance'
+                                title = 'GAH'
+                                pairName = 'Token Balance'
                                 pairPrice = {this.state.balance}
                             />
                         </div>

@@ -68,10 +68,10 @@ export default class binanceAPI {
         return symbol.symbol.indexOf(userInput) >= 0
       }).map((symbol) => {
         return {
-          symbol: symbol.symbol=='BTCUSDT'?'EGAUSDT':symbol.symbol,
-          full_name: symbol.symbol=='BTCUSDT'?'EGAUSDT':symbol.symbol,
-          description: symbol.baseAsset=='BTC'?'EGA':symbol.baseAsset + ' / ' + symbol.quoteAsset,
-          ticker: symbol.symbol=='BTCUSDT'?'EGAUSDT':symbol.symbol,
+          symbol: symbol.symbol=='BTCUSDT'?'GAHUSDT':symbol.symbol,
+          full_name: symbol.symbol=='BTCUSDT'?'GAHUSDT':symbol.symbol,
+          description: symbol.baseAsset=='BTC'?'GAH':symbol.baseAsset + ' / ' + symbol.quoteAsset,
+          ticker: symbol.symbol=='BTCUSDT'?'GAHUSDT':symbol.symbol,
           exchange: 'Binance',
           type: 'crypto'
         }
@@ -98,9 +98,9 @@ export default class binanceAPI {
       if (symbol.symbol == symbolName) {
         setTimeout(() => {
           onSymbolResolvedCallback({
-            name: symbol.symbol=='BTCUSDT'?'EGAUSDT':symbol.symbol,
-            description: symbol.baseAsset=='BTC'?'EGA':symbol.baseAsset + ' / ' + symbol.quoteAsset,
-            ticker: symbol.symbol=='BTCUSDT'?'EGAUSDT':symbol.symbol,
+            name: symbol.symbol=='BTCUSDT'?'GAHUSDT':symbol.symbol,
+            description: symbol.baseAsset=='BTC'?'GAH':symbol.baseAsset + ' / ' + symbol.quoteAsset,
+            ticker: symbol.symbol=='BTCUSDT'?'GAHUSDT':symbol.symbol,
             exchange: 'Binance',
             listed_exchange: 'Binance',
             type: 'crypto',
@@ -128,7 +128,7 @@ export default class binanceAPI {
       let egabtc = await this.getEGABTC(1);
       let interval = this.ws.tvIntervals[resolution]
       to *= 1000
-      let data = await this.binanceKlines(symbolInfo.name=='EGAUSDT'?'BTCUSDT':symbolInfo.name, interval ,null, to)
+      let data = await this.binanceKlines(symbolInfo.name=='GAHUSDT'?'BTCUSDT':symbolInfo.name, interval ,null, to)
       if (!data || !data.length) onHistoryCallback([], { noData: true })
       else {
         data = data.map(item => ({

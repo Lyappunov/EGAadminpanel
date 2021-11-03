@@ -16,8 +16,7 @@ const Record = (props) => {
     return (
   <tr >
     <td>{props.record.personName}</td>
-    <td>{props.record.phoneNumber}</td>
-    <td>{address}</td>
+    <td>{props.record.walletAddress}</td>
     <td>{props.record.tranDate}</td>
     <td>{props.record.tokenName}</td>
     <td className={props.record.tranType=='SELL'?'text-danger':'text-success'}>{props.record.tranType}</td>
@@ -118,7 +117,6 @@ class Transaction extends Component {
                                     <thead>
                                         <tr>
                                         <th>Person</th>
-                                        <th>Phone Number</th>
                                         <th>Wallet Address</th>
                                         <th>Transaction Date</th>
                                         <th>Token Name</th>

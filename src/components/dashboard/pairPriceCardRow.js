@@ -54,33 +54,33 @@ class PairPriceCardRow extends Component {
                         <div className="col-md-3">
                             <PairPriceCard 
                                 cardLogo = {this.logo}
-                                pairName = 'BTC/EGA'
+                                pairName = 'BTC/GAH'
                                 pairPrice = {this.state.btcega}
-                                smallText = {'1 BTC = ' + 1/this.state.btcega + ' EGA'}
+                                smallText = {'1 BTC = ' + 1/this.state.btcega + ' GAH'}
                             />
                         </div>
                         <div className="col-md-3">
                             <PairPriceCard 
                                 cardLogo = {this.logo}
-                                pairName = 'USDT/EGA'
+                                pairName = 'USDT/GAH'
                                 pairPrice = {this.state.usdtega}
-                                smallText = {'1 USDT = ' + 1/this.state.usdtega + ' EGA'}
+                                smallText = {'1 USDT = ' + 1/this.state.usdtega + ' GAH'}
                             />
                         </div>
                         <div className="col-md-3">
                             <PairPriceCard 
                                 cardLogo = {this.logo}
-                                pairName = 'BNB/EGA'
+                                pairName = 'BNB/GAH'
                                 pairPrice = {this.state.bnbega}
-                                smallText = {'1 BNB = ' + 1/this.state.bnbega + ' EGA'}
+                                smallText = {'1 BNB = ' + 1/this.state.bnbega + ' GAH'}
                             />
                         </div>
                         <div className="col-md-3">
                             <PairPriceCard 
                                 cardLogo = {this.logo}
-                                pairName = 'MOS/EGA'
+                                pairName = 'EFRANC/GAH'
                                 pairPrice = {this.state.egamos}
-                                smallText = {'1 MOS = ' + 1/this.state.ega + ' EGA'}
+                                smallText = {'1 FRANC = ' + (1/this.state.egamos).toFixed(10) + ' GAH'}
                             />
                         </div>
                     </div>
