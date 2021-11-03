@@ -80,13 +80,13 @@ class TokenPriceCard extends Component {
                                 <div className="modal-content">
                                     <div className="modal-header" style={{display:'block'}}>
                                     
-                                        <span>Calculated Ega Coin price : &nbsp;&nbsp;&nbsp;
+                                        <span>Calculated GAH Token price : &nbsp;&nbsp;&nbsp;
                                             {this.state.calculatedPrice == ''?
                                             (<div className="spinner-border text-primary" role="status" style={{width:'1rem', height:'1rem'}}> </div>):
                                             (<span style={{color:'yellow', fontSize:22}}>{this.state.calculatedPrice}</span>)}   
                                         </span>
                                         <br/><br/>
-                                        <span>Ega Coin price to display : &nbsp;&nbsp;&nbsp;
+                                        <span>GAH Token price to display : &nbsp;&nbsp;&nbsp;
                                             {this.state.calculatedPrice == ''?
                                             (<div className="spinner-border text-primary" role="status" style={{width:'1rem',height:'1rem'}}> </div>):
                                             (<span style={{color:'green', fontSize:22}}>{(this.state.displayPrice).toFixed(11)}</span>)}   
@@ -95,7 +95,7 @@ class TokenPriceCard extends Component {
                                     <div className="modal-body">
                                         <div className="row">
                                             <div className="col-lg-4" >
-                                                <span style={{float:'right',display:'flex',  alignItems:'center', height:'100%', paddingBottom:'1.5rem'}}>EGA Coin</span>
+                                                <span style={{float:'right',display:'flex',  alignItems:'center', height:'100%', paddingBottom:'1.5rem'}}>GAH Token </span>
                                             </div>
                                             <div className="col-lg-6">
                                                 <div className="form-floating mb-3">
@@ -108,7 +108,7 @@ class TokenPriceCard extends Component {
                                         </div>
                                         <div className="row">
                                             <div className="col-lg-4">
-                                                <span style={{float:'right',display:'flex', alignItems:'center', height:'100%', paddingBottom:'1.5rem'}}>MOS Token</span>
+                                                <span style={{float:'right',display:'flex', alignItems:'center', height:'100%', paddingBottom:'1.5rem'}}>E-FRANC Token</span>
                                             </div>
                                             <div className="col-lg-6">
                                                 <div className="form-floating mb-3">

@@ -91,7 +91,7 @@ class LimitedAmount extends Component {
                                                 </div>
                                             </div>
                                             <div className="col-lg-2">
-                                                <span style={{display:'flex', alignItems:'center', height:'100%', paddingBottom:'1.5rem'}}>EGA</span>
+                                                <span style={{display:'flex', alignItems:'center', height:'100%', paddingBottom:'1.5rem'}}>GAH</span>
                                             </div>
                                         </div>
                                     </div>
